@@ -1,0 +1,46 @@
+<%- include('./header.ejs')%>
+<div class="container">
+    <div class="content_header">
+        <h1>Click on the job you are interested to start sending personalized request</h1>
+    </div>
+    <table class = "table">
+            <tr class = "tableRow headerRow">
+                <th class = "tableHeaderCell">S No.</th>
+                <th class = "tableHeaderCell">Title</th>
+                <th class = "tableHeaderCell">Category</th>
+                <th class = "tableHeaderCell">Location</th>
+                <th class = "tableHeaderCell">Date Posted</th>
+                <th class = "tableHeaderCell">URl</th>
+                <th class = "tableHeaderCell">Company</th>
+                <th class = "tableHeaderCell">Send Req</th>
+            </tr>
+
+            <% for(let i in data){ %>
+                <tr class = "tableRow">
+                <% let values = Object.values(data[i]); %>
+                <%let n = values.length;%>
+                <td class = "tableCell"><%= Number.parseInt(i) + 1 %></td>
+                <% for( let j = 0; j < n; j++){%>
+                    <td class = "tableCell">
+                            <% if(j == 4){ %>
+                                <a class = "link" href = "<%= values[j] %>">
+                                    View Job
+                                </a>
+                            <% } else{ %>
+                            <%= values[j] %>
+                            <% } %>
+                    </td>
+                <% } %>
+                <td class = "tableCell">
+                    <button class = "tableBtn">
+                        Click 
+                    </button>
+                </td>    
+                </tr>
+            <% } %>
+    </table>
+</div>
+
+
+
+<%- include('./footer.ejs')%>

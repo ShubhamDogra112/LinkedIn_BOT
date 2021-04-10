@@ -1,0 +1,101 @@
+*, *::after, *::before{
+    margin : 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html{
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    max-width: 100%;
+    margin : 4rem 1rem;
+}
+
+body{
+    font-family: 'Nunito', sans-serif;
+}
+
+.table{
+    border-collapse: collapse;
+    margin: 4rem auto;
+    font-size: 1.5rem;
+    padding : 1rem;
+}
+
+.tableHeaderCell{
+    padding: 1.5rem 1rem;
+    text-align: center;
+}
+
+.link{
+    text-decoration: none;
+    font-size: 1.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #f6000e;
+    display: inline-block;
+    transform: scale(1);
+    transition: transform 0.2s ease-in-out;
+}
+.link:hover, .tableBtn:hover{
+    transform: scale(1.1);
+}
+.headerRow{
+    background-color: #db5266;
+    color:#f7deb9;
+
+}
+
+.tableHeaderCell{
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 14rem;
+}
+
+.tableRow{
+    border-bottom: 0.2rem solid #ededed;
+    margin-top: 5rem;
+    z-index: 0;
+}
+
+.tableRow:hover{
+    z-index: 10;
+}
+
+.tableCell{
+    padding: 2rem;
+    text-align: center;
+    width: 14rem;
+}
+
+/* .tableRow .tableCell:first-child{ */
+    /* border-radius: 1rem 0 0 1rem; */
+/* } */
+
+/* .tableRow .tableCell:last-child{ */
+    /* border-radius: 0 1rem 1rem 0; */
+/* }. */
+
+.tableBtn{
+    text-decoration: none;
+    padding:0.5rem 1.4rem;
+    border-radius: 0.8rem; 
+    border: none;
+    width: 10rem;
+    cursor: pointer;
+    outline: none;
+    background-color: #ffc3c6;
+    color: #f6000e;
+    font-size:1.5rem;
+    transform: scale(1);
+    display: inline-block;
+    transition: all 0.2s linear;
+}
+
