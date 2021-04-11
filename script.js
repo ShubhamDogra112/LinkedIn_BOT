@@ -1,11 +1,6 @@
 const data = require("./data/credentials")
 const pup = require("puppeteer");
 const credentials = require("./data/credentials");
-const blacklist = ["/in/ahmed-mazhari-7717773/",
-                  "/in/mariannejanik/",
-                    "/in/silvia-candiani-5768b63/",
-                    "/in/kathleenthogan/",
-                    "/in/kathleenthogan/"]
 
 module.exports = {
     run : async() => {
@@ -37,7 +32,7 @@ module.exports = {
             await tab.waitForSelector(".org-people-profiles-module__profile-item");
 
             let hrefs = [];
-            while(hrefs.length <= 20){
+            while(hrefs.length <= 10){
                 await tab.evaluate(_ => {
                     window.scrollBy(0, (window.innerHeight + window.pageYOffset + 1050))
                 });
@@ -55,27 +50,57 @@ module.exports = {
             }
             idx = 0;
             for(let href of hrefs){
-
-                if(blacklist.includes(href)) continue;
                 if(idx == 5){
                     break;
                 }
                 await tab.goto("https://www.linkedin.com" + href);
-                await tab.waitForSelector('.ml2.mr2')
-                await tab.click('.ml2.mr2')
-                await tab.waitForSelector('.artdeco-dropdown__content-inner ul')
-                let links = await tab.$$('.artdeco-dropdown__content-inner ul li')
-                await links[2].click()
-                await tab.waitForSelector('input[name="subject"]', {visible: true})
-                await tab.type('input[name="subject"]', 'Referral Request');
-                await tab.click('.msg-form__contenteditable');
-                await tab.type('.msg-form__contenteditable', credentials.message);
-
-                await waitfor(1000);
-                await tab.click('.msg-form__send-button');
-                idx++;
-            }
             
+                    await tab.waitForSelector('.ml2.mr2')
+                    await tab.click('.ml2.mr2')
+                    await tab.waitForSelector('.artdeco-dropdown__content-inner ul')
+                    let links = await tab.$$('.artdeco-dropdown__content-inner ul li')
+                    let litext1 = await tab.evaluate(e => e.innerText , links[2]);
+                    litext1 = litext1.split(" ")[0];
+                    if(litext1 === 'Message'){
+                        await links[2].click()
+                        await tab.waitForSelector('input[name="subject"]', {visible: true})
+                        await tab.type('input[name="subject"]', 'Referral Request');
+                        await tab.click('.msg-form__contenteditable');
+                        await tab.type('.msg-form__contenteditable', credentials.message);
+
+                        await waitfor(1000);
+                        await tab.click('.msg-form__send-button');
+                        idx++;
+                    }
+                    else{
+                        await links[3].click()
+                        let linktext3 = await tab.evaluate(e => e.innerText , links[3]);
+                        if(linktext3.indexOf("\n") > -1){
+                            linktext3 = linktext3.split("\n")
+                            linktext3 = linktext3[0];
+                        }
+                        if(linktext3 === 'Pending' || linktext3 === 'Report / Block'){
+                            let msgBTn = await tab.$('.message-anywhere-button.pv-s-profile-actions.pv-s-profile-actions--message.ml2.artdeco-button.artdeco-button--2.artdeco-button--muted.artdeco-button--primary')
+                            if(msgBTn == null) continue;
+                            await msgBTn.click();
+
+                            await tab.waitForSelector('input[name="subject"]', {visible: true})
+                            await tab.type('input[name="subject"]', 'Referral Request');
+                            await tab.click('.msg-form__contenteditable');
+                            await tab.type('.msg-form__contenteditable', credentials.message);
+
+                            
+                            await waitfor(1000);
+                            await tab.click('.msg-form__send-button');
+                            idx++;
+                            continue;
+                        }
+                        else{
+                            continue;
+                        } 
+                    }
+             
+            }
         }
 		catch(err){
 			console.error(err);
