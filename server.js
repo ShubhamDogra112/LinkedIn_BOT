@@ -48,11 +48,11 @@ const browser = pup.launch({
 
 browser.then(async br => {
 
-    // for(let file of fs.readdirSync(dir)){
-    //     let f = require(dir + file);
-    //     finalData = await f.run(br);
-    // }
-    // fs.writeFileSync('./data/data.json', JSON.stringify(finalData));
+     for(let file of fs.readdirSync(dir)){
+         let f = require(dir + file);
+         finalData = await f.run(br);
+     }
+     fs.writeFileSync('./data/data.json', JSON.stringify(finalData));
     let tab = await br.newPage();   
     tab.goto("http://localhost:3000");
 })
